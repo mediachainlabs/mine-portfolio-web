@@ -3,10 +3,9 @@ import Relay from 'react-relay';
 
 class App extends React.Component {
   render() {
-    const {children, viewer} = this.props;
+    const {children} = this.props;
     return (
       <div>
-        {viewer.id}
         {children}
       </div>
     );

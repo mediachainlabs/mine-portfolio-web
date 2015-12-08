@@ -32,6 +32,8 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.3.13",
+    "bootstrap": "git://github.com/twbs/bootstrap.git#980d8ea2d828fe1796a423f80d84d526b0252a89",
+    "classnames": "^2.2.1",
     "history": "^1.13.1",
     "normalize.css": "^3.0.3",
     "react": "^0.14.3",

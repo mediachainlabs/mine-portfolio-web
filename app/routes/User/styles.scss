@@ -1,0 +1,38 @@
+@import '../../css/mixins';
+
+.header {
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+
+.username {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.images {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.gridItem {
+  width: 50%;
+  background-color: #blue;
+  display: flex;
+  align-items: center;
+  @include media-breakpoint-up(md) {
+    width: 33%;
+  }
+}
+
+.image {
+  padding: 10px;
+  display: block;
+  img {
+    padding: 1px;
+    background-color: #ddd;
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
