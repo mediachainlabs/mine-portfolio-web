@@ -1,0 +1,13 @@
+
+.root {
+  $size: 35px;
+  width: $size;
+  height: $size;
+  line-height: $size - 2px;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

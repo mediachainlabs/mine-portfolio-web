@@ -1,21 +1,61 @@
 import React from 'react';
 import Relay from 'react-relay';
 
+import {uploadFile} from 'app/util/fileUpload';
+import performMutation from 'app/util/performMutation';
 import Container from 'app/components/Container';
 import ImageLink from 'app/routes/Image/Link';
+import DropTarget from 'app/components/DropTarget';
+import RemoveImage from 'app/components/RemoveImage';
+import CreateImages from 'app/mutations/CreateImages';
+import DeleteImage from 'app/mutations/DeleteImage';
 
 import styles from './styles.scss';
 
 class User extends React.Component {
+  handleDropTargeOnDrop = (files) => {
+    this.uploadFiles(files);
+  }
+
+  async uploadFiles(files) {
+    try {
+      const {user} = this.props;
+      const imageUrls = await Promise.all(files.map(uploadFile));
+      const mutation = new CreateImages({imageUrls, user});
+      await performMutation(mutation);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  handleRemoveImageOnClick = async (imageId) => {
+    try {
+      const {user} = this.props;
+      const mutation = new DeleteImage({imageId, user});
+      const resp = await performMutation(mutation);
+      console.log(resp);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
   render() {
     const {user} = this.props;
 
     const images  = user.images.map(image => {
+      const remove = image.viewerCanDelete
+        ?  <RemoveImage className={styles.removeImage}
+            onClick={this.handleRemoveImageOnClick.bind(this, image.id)} />
+        : null;
+
       return (
         <div key={image.id} className={styles.gridItem}>
-          <ImageLink image={image} className={styles.image}>
-            <img src={image.imageUrl} />
-          </ImageLink>
+          <div className={styles.image}>
+            {remove}
+            <ImageLink image={image}>
+              <img src={image.imageUrl} />
+            </ImageLink>
+          </div>
         </div>
       );
     });
@@ -27,6 +67,10 @@ class User extends React.Component {
             {user.username}
           </div>
         </Container>
+        <DropTarget onDrop={this.handleDropTargeOnDrop}>
+          foo
+          <br />
+        </DropTarget>
         <Container>
           <div className={styles.images}>
             {images}
@@ -41,11 +85,14 @@ export default Relay.createContainer(User, {
   fragments: {
     user: () => Relay.QL`
       fragment on User {
+        ${CreateImages.getFragment('user')}
+        ${DeleteImage.getFragment('user')}
         username
         images {
           id
           imageUrl(width: 400)
           ${ImageLink.getFragment('image')}
+          viewerCanDelete
         }
       }
     `,

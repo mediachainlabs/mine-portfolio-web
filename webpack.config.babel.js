@@ -24,6 +24,16 @@ const LOGIN_URL = {
   'production': 'https://mine-portfolio.herokuapp.com/auth/twitter'
 }[NODE_ENV];
 
+const S3_POLICY_URL = `${API_ORIGIN}/file-upload/policy`;
+
+const S3_ORIGIN = {
+  'development': 'https://mine-stag.s3.amazonaws.com',
+  'production': 'https://mine-prod.s3.amazonaws.com'}[NODE_ENV];
+
+export const IMGIX_ORIGIN = {
+  'development': 'https://mine-staging.imgix.net',
+  'production': 'https://mine-prod.imgix.net'}[NODE_ENV];
+
 const cssLoaders = function(env) {
   const localIdentName = {
     development: '[path][name]---[local]---[hash:base64:5]',
@@ -61,6 +71,9 @@ const config = {
       __ENV__: JSON.stringify(NODE_ENV),
       __API_ORIGIN__: JSON.stringify(API_ORIGIN),
       __LOGIN_URL__: JSON.stringify(LOGIN_URL),
+      __S3_POLICY_URL__: JSON.stringify(S3_POLICY_URL),
+      __IMGIX_ORIGIN__: JSON.stringify(IMGIX_ORIGIN),
+      __S3_ORIGIN__: JSON.stringify(S3_ORIGIN),
     })
   ],
   module: {
