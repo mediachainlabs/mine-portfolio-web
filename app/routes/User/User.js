@@ -4,6 +4,7 @@ import Relay from 'react-relay';
 import {uploadFile} from 'app/util/fileUpload';
 import performMutation from 'app/util/performMutation';
 import Container from 'app/components/Container';
+import Loader from 'app/components/Loader';
 import ImageLink from 'app/routes/Image/Link';
 import DropTarget from 'app/components/DropTarget';
 import RemoveImage from 'app/components/RemoveImage';
@@ -13,6 +14,11 @@ import DeleteImage from 'app/mutations/DeleteImage';
 import styles from './styles.scss';
 
 class User extends React.Component {
+  constructor() {
+    super();
+    this.state = {pendingImageUploads: []};
+  }
+
   handleDropTargeOnDrop = (files) => {
     this.uploadFiles(files);
   }
@@ -20,10 +26,13 @@ class User extends React.Component {
   async uploadFiles(files) {
     try {
       const {user} = this.props;
+      this.setState({pendingImageUploads: files});
       const imageUrls = await Promise.all(files.map(uploadFile));
       const mutation = new CreateImages({imageUrls, user});
       await performMutation(mutation);
+      this.setState({pendingImageUploads: []});
     } catch(e) {
+      this.setState({pendingImageUploads: []});
       console.log(e);
     }
   }
@@ -41,6 +50,7 @@ class User extends React.Component {
 
   render() {
     const {user} = this.props;
+    const {pendingImageUploads} = this.state;
 
     const images  = user.images.map(image => {
       const remove = image.viewerCanDelete
@@ -59,6 +69,16 @@ class User extends React.Component {
         </div>
       );
     });
+
+    for (let pendingImage of pendingImageUploads) {
+      images.unshift(
+        <div key={pendingImage} className={styles.gridItem}>
+          <div className={styles.placeholderImage}>
+            <Loader className={styles.imageLoader} />
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div>
