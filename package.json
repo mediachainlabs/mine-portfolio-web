@@ -8,7 +8,7 @@
     "updateSchema": "babel-node app/util/updateSchema.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist/",
-    "deploy": "npm run clean && NODE_ENV=production npm run build && npm run upload",
+    "deploy": "npm run updateSchema && npm run clean && NODE_ENV=production npm run build && npm run upload",
     "upload": "babel-node script/upload",
     "build": "webpack"
   },

@@ -23,7 +23,7 @@
 .gridItem {
   position: relative;
   width: 50%;
-  background-color: #blue;
+  float: left;
   display: flex;
   align-items: center;
   @include media-breakpoint-up(sm) {
@@ -55,12 +55,7 @@
 }
 
 .placeholderImage {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  background-color: #f0f0f0;
+  width: 100%;
 }
 
 .imageLoader {

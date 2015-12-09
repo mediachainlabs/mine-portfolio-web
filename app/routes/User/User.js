@@ -13,6 +13,8 @@ import DeleteImage from 'app/mutations/DeleteImage';
 
 import styles from './styles.scss';
 
+const transparentPixel = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=';
+
 class User extends React.Component {
   constructor() {
     super();
@@ -72,8 +74,9 @@ class User extends React.Component {
 
     for (let pendingImage of pendingImageUploads) {
       images.unshift(
-        <div key={pendingImage} className={styles.gridItem}>
-          <div className={styles.placeholderImage}>
+        <div key={pendingImage.name} className={styles.gridItem}>
+          <div style={{width: '100%'}} className={styles.image}>
+            <img className={styles.placeholderImage} src={transparentPixel} />
             <Loader className={styles.imageLoader} />
           </div>
         </div>
