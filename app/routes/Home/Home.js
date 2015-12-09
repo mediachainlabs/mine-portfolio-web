@@ -1,7 +1,7 @@
 import React from 'react';
 import Relay from 'react-relay';
 
-import LoginLink from 'app/routes/Login/Link.js';
+import styles from './styles.scss';
 
 class Home extends React.Component {
 
@@ -14,8 +14,20 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
-        Home - <LoginLink>Login</LoginLink>
+      <div className={styles.root}>
+        <div className={styles.content}>
+          <div className={styles.title}>
+            Mine
+          </div>
+          <div className={styles.subtitle}>
+            Decentralized, open source portfolio.
+          </div>
+          <div>
+          <a href={__LOGIN_URL__} className={styles.button}>
+            Sing up with Twitter
+          </a>
+          </div>
+        </div>
       </div>
     );
   }

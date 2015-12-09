@@ -1,0 +1,41 @@
+
+.root {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.content {
+  flex: 1 0 auto;
+  text-align: center;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 20px;
+  background-color: black;
+  color: white;
+  padding: 10px 30px;
+  &:hover {
+    color: white;
+  }
+}

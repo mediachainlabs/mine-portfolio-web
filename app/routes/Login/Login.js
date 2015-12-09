@@ -12,6 +12,7 @@ class Login extends React.Component {
 
     if (location.query.token) {
       login(location.query.token);
+      window.location = '/';
     }
   }
 

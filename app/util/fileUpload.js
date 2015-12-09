@@ -31,13 +31,22 @@ const uploadFileWithCred = async ({policy, s3BucketName}, fileOrBlob, contentTyp
   const s3Url = `https://${s3BucketName}.s3.amazonaws.com`;
   const readURL = [s3Url, policy.key].join('/');
 
-  await fetch(s3Url, {
-    method: 'post',
-    body: data
-  });
-  const imgixUrl = makeImgixUrl(readURL);
-  console.log(`uploaded to: ${readURL} (imgix: ${imgixUrl})`);
-  return imgixUrl;
+  try {
+    const resp = await fetch(s3Url, {
+      method: 'post',
+      body: data
+    });
+
+    if (resp.status >= 200 && resp.status < 300) {
+      const imgixUrl = makeImgixUrl(readURL);
+      console.log(`uploaded to: ${readURL} (imgix: ${imgixUrl})`);
+      return imgixUrl;
+    }
+    throw new Error(resp.statusText);
+  } catch (e) {
+    console.log(e);
+    throw(e);
+  }
 };
 
 export const uploadFile = async (file) => {

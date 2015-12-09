@@ -21,7 +21,7 @@ export default class CreateImages extends Relay.Mutation {
   getFatQuery() {
     return Relay.QL`
       fragment on createImagesPayload {
-        user { images { imageUrl } }
+        user { images }
       }
     `;
   }

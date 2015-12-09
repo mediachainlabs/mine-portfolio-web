@@ -1,5 +1,10 @@
 @import './bootstrap';
 @import './variables';
 
-body {
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+  height: 100%;
 }

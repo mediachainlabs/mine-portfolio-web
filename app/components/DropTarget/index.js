@@ -4,7 +4,10 @@ import classnames from 'classnames';
 
 export default class DropTarget extends React.Component {
   static propTypes = {
-    onDrop: PropTypes.func.isRequired
+    onDrop: PropTypes.func.isRequired,
+    onDragEnter: PropTypes.func,
+    onDragLeave: PropTypes.func,
+    activeClass: PropTypes.string
   }
 
   constructor() {
@@ -16,11 +19,13 @@ export default class DropTarget extends React.Component {
 
   onDragEnter(e){
     e.preventDefault();
+    this.props.onDragEnter && this.props.onDragEnter(e);
     this.setState({ dragTargetActive: true });
   }
 
   onDragLeave(e) {
     e.preventDefault();
+    this.props.onDragLeave && this.props.onDragLeave(e);
     this.setState({ dragTargetActive: false });
   }
 
@@ -32,8 +37,10 @@ export default class DropTarget extends React.Component {
   }
 
   render() {
-    const { children, className, activeClass } = this.props;
-    const { dragTargetActive } = this.state;
+    const {children, className, activeClass, enabled} = this.props;
+    const {dragTargetActive} = this.state;
+
+    if (!enabled) return <div>{children}</div>;
 
     return (
       <div

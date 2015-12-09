@@ -3,8 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const env = require('require-env');
 
-const API_HOST = env.require('API_HOST');
-const API_PORT = env.require('API_PORT');
+const API_ORIGIN = env.require('API_ORIGIN');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const isProduction = NODE_ENV === 'production';
 
@@ -12,16 +11,11 @@ const DEV_PORT = 8098;
 const cssFilename = isProduction ? '[name].[hash].css' : '[name].css';
 const JSFilename = isProduction ? 'app.[hash].js' : 'app.js';
 const devOrigin = `http://localhost:${DEV_PORT}/`;
-const PublicPath = isProduction ? 'https://s3.amazonaws.com/react-starter.com/' : devOrigin;
-
-const API_ORIGIN = {
-  'development': `http://${API_HOST}:${API_PORT}`,
-  'production': 'https://mine-portfolio.herokuapp.com'
-}[NODE_ENV];
+const PublicPath = isProduction ? 'http://mine-portfolio.s3.amazonaws.com/' : devOrigin;
 
 const LOGIN_URL = {
   'development': `${API_ORIGIN}/auth/twitter`,
-  'production': 'https://mine-portfolio.herokuapp.com/auth/twitter'
+  'production': `${API_ORIGIN}/auth/twitter`
 }[NODE_ENV];
 
 const S3_POLICY_URL = `${API_ORIGIN}/file-upload/policy`;

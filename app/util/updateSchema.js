@@ -4,14 +4,13 @@ import fetch from 'isomorphic-fetch';
 import env from 'require-env';
 
 const targetPath = path.join(__dirname, '..', '..', 'tmp');
-const API_HOST = env.require('API_HOST');
-const API_PORT = env.require('API_PORT');
+const API_URL = env.require('API_URL');
 
 if (!fs.existsSync(targetPath)) {
   fs.mkdirSync(targetPath);
 }
 
-fetch(`http://${API_HOST}:${API_PORT}/schema`)
+fetch(`http://${API_URL}/schema`)
   .then((r) => r.json())
   .then((json) => {
     fs.writeFileSync(

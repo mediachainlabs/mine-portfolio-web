@@ -62,20 +62,24 @@ class User extends React.Component {
 
     return (
       <div>
-        <Container className={styles.header} inset={true}>
-          <div className={styles.username}>
-            {user.username}
-          </div>
-        </Container>
-        <DropTarget onDrop={this.handleDropTargeOnDrop}>
-          foo
-          <br />
+        <DropTarget enabled={user.isCurrentUser}
+          className={styles.backgroundDropTarget}
+          onDrop={this.handleDropTargeOnDrop} />
+        <DropTarget enabled={user.isCurrentUser}
+          onDrop={this.handleDropTargeOnDrop}>
+            <Container className={styles.header} inset={true}>
+              <a href={`https://twitter.com/${user.username}`}
+                target='_blank'
+                className={styles.username}>
+                @{user.username}
+              </a>
+            </Container>
+            <Container>
+              <div className={styles.images}>
+                {images}
+              </div>
+            </Container>
         </DropTarget>
-        <Container>
-          <div className={styles.images}>
-            {images}
-          </div>
-        </Container>
       </div>
     );
   }
@@ -87,6 +91,7 @@ export default Relay.createContainer(User, {
       fragment on User {
         ${CreateImages.getFragment('user')}
         ${DeleteImage.getFragment('user')}
+        isCurrentUser
         username
         images {
           id
