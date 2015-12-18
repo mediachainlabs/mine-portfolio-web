@@ -5,6 +5,7 @@ import Container from 'app/components/Container';
 import UserLink from 'app/routes/User/Link';
 
 import styles from './styles.scss';
+import Versions from './Versions';
 
 class Image extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class Image extends React.Component {
         <Container inset={true} className={styles.container} style={{maxWidth: 900}}>
           <div className={styles.image}>
             <img src={image.imageUrl} />
+            <Versions image={image} />
           </div>
           <div className={styles.info}>
             <div className={styles.label}>
@@ -36,6 +38,7 @@ export default Relay.createContainer(Image, {
     image: () => Relay.QL`
       fragment on Image {
         imageUrl(width: 1200)
+        ${Versions.getFragment('image')}
         user {
           username
           ${UserLink.getFragment('user')}

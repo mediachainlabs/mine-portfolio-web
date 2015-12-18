@@ -1,0 +1,30 @@
+
+.root {
+  padding: 40px 0;
+}
+
+.heading {
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid #999;
+  margin-bottom: 20px;
+  padding: 5px 0;
+}
+
+.row {
+  display: flex;
+  margin: 40px 0;
+}
+
+.image {
+  margin-right: 10px;
+  flex: 0 0 auto;
+  img {
+    width: 80px;
+  }
+}
+
+.backlink {
+  font-size: 0.8rem;
+}
